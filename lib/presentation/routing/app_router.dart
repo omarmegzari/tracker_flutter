@@ -7,7 +7,7 @@ import '../../application/providers/auth_provider.dart';
 part 'app_router.g.dart';
 
 @riverpod
-GoRouter appRouter(AppRouterRef ref) {
+GoRouter appRouter(Ref ref) {
   final authState = ref.watch(authStateProvider);
 
   return GoRouter(
