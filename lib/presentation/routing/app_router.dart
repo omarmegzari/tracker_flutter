@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../screens/login_screen.dart';
 import '../screens/main_layout.dart';
+import '../screens/dashboard_screen.dart';
 import '../screens/vehicles_screen.dart';
 import '../screens/fuel_screen.dart';
 import '../screens/maintenance_screen.dart';
@@ -35,7 +36,7 @@ GoRouter appRouter(Ref ref) {
         routes: [
           GoRoute(
             path: '/dashboard',
-            builder: (context, state) => const Center(child: Text('Dashboard Placeholder')),
+            builder: (context, state) => const DashboardScreen(),
           ),
           GoRoute(
             path: '/vehicles',
