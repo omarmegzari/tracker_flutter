@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../screens/login_screen.dart';
+import '../screens/main_layout.dart';
+import '../screens/vehicles_screen.dart';
 import '../../application/providers/auth_provider.dart';
 
 part 'app_router.g.dart';
@@ -26,9 +28,26 @@ GoRouter appRouter(Ref ref) {
         path: '/login',
         builder: (context, state) => const LoginScreen(),
       ),
-      GoRoute(
-        path: '/dashboard',
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Dashboard Placeholder'))),
+      ShellRoute(
+        builder: (context, state, child) => MainLayout(child: child),
+        routes: [
+          GoRoute(
+            path: '/dashboard',
+            builder: (context, state) => const Center(child: Text('Dashboard Placeholder')),
+          ),
+          GoRoute(
+            path: '/vehicles',
+            builder: (context, state) => const VehiclesScreen(),
+          ),
+          GoRoute(
+            path: '/fuel',
+            builder: (context, state) => const Center(child: Text('Carburant Placeholder')),
+          ),
+          GoRoute(
+            path: '/maintenance',
+            builder: (context, state) => const Center(child: Text('Maintenance Placeholder')),
+          ),
+        ],
       ),
     ],
   );
