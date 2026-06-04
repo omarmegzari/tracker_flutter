@@ -17,7 +17,7 @@ class DashboardScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Erreur: $err')),
         data: (vehicles) {
           if (vehicles.isEmpty) {
-            return const Center(child: Text('Bienvenue ! Commencez par ajouter un véhicule dans l\\'onglet Véhicules.'));
+            return const Center(child: Text("Bienvenue ! Commencez par ajouter un véhicule dans l'onglet Véhicules."));
           }
 
           final fuelEntries = fuelAsync.value ?? [];
