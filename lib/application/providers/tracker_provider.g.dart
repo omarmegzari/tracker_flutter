@@ -139,7 +139,7 @@ final class TrackerControllerProvider
         argument: null,
         retry: null,
         name: r'trackerControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -152,7 +152,7 @@ final class TrackerControllerProvider
   TrackerController create() => TrackerController();
 }
 
-String _$trackerControllerHash() => r'2d247357c009665cae2700583793523a303bd124';
+String _$trackerControllerHash() => r'7d80936acd4075d5f2c8bc255623c866ff5e5319';
 
 abstract class _$TrackerController extends $AsyncNotifier<void> {
   FutureOr<void> build();

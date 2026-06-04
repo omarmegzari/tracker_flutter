@@ -33,7 +33,7 @@ Stream<User?> authState(Ref ref) {
   return ref.watch(authRepositoryProvider).authStateChanges;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AuthController extends _$AuthController {
   @override
   FutureOr<void> build() {}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/providers/tracker_provider.dart';
+import '../../domain/models/vehicle.dart';
 
 class FuelScreen extends ConsumerWidget {
   const FuelScreen({super.key});
@@ -47,7 +48,7 @@ class FuelScreen extends ConsumerWidget {
     );
   }
 
-  void _showAddFuelDialog(BuildContext context, WidgetRef ref, List<dynamic> vehicles) {
+  void _showAddFuelDialog(BuildContext context, WidgetRef ref, List<Vehicle> vehicles) {
     final litersController = TextEditingController();
     final costController = TextEditingController();
     String? selectedVehicleId = vehicles.first.id;
@@ -63,7 +64,7 @@ class FuelScreen extends ConsumerWidget {
               children: [
                 DropdownButtonFormField<String>(
                   value: selectedVehicleId,
-                  items: vehicles.map((v) => DropdownMenuItem(value: v.id, child: Text('${v.brand} ${v.model}'))).toList(),
+                  items: vehicles.map((v) => DropdownMenuItem<String>(value: v.id, child: Text('${v.brand} ${v.model}'))).toList(),
                   onChanged: (val) => setState(() => selectedVehicleId = val),
                   decoration: const InputDecoration(labelText: 'Véhicule'),
                 ),

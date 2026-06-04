@@ -55,7 +55,7 @@ Stream<List<Maintenance>> maintenances(Ref ref) {
           .toList());
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TrackerController extends _$TrackerController {
   @override
   FutureOr<void> build() {}
