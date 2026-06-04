@@ -17,7 +17,7 @@ class DashboardScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Erreur: $err')),
         data: (vehicles) {
           if (vehicles.isEmpty) {
-            return const Center(child: Text('Bienvenue ! Commencez par ajouter un véhicule.'));
+            return const Center(child: Text('Bienvenue ! Commencez par ajouter un véhicule dans l\\'onglet Véhicules.'));
           }
 
           final fuelEntries = fuelAsync.value ?? [];
@@ -29,6 +29,10 @@ class DashboardScreen extends ConsumerWidget {
 
           double fuelPercentage = totalCost == 0 ? 0 : (totalFuelCost / totalCost) * 100;
           double maintenancePercentage = totalCost == 0 ? 0 : (totalMaintenanceCost / totalCost) * 100;
+
+          // Calcul Consommation ce mois
+          final now = DateTime.now();
+          final currentMonthEntries = fuelEntries.where((e) => e.date.year == now.year && e.date.month == now.month).toList();
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -88,15 +92,22 @@ class DashboardScreen extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              const Text('Mes Véhicules', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text('Consommation de ce mois', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
-              ...vehicles.map((vehicle) => Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.directions_car, color: Colors.blue),
-                      title: Text('${vehicle.brand} ${vehicle.model}'),
-                      subtitle: Text(vehicle.registrationNumber),
-                    ),
-                  )),
+              ...vehicles.map((vehicle) {
+                final vehicleEntries = currentMonthEntries.where((e) => e.vehicleId == vehicle.id).toList();
+                final liters = vehicleEntries.fold(0.0, (sum, e) => sum + e.liters);
+                final cost = vehicleEntries.fold(0.0, (sum, e) => sum + e.cost);
+                
+                return Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.directions_car, color: Colors.blue),
+                    title: Text('${vehicle.brand} ${vehicle.model}'),
+                    subtitle: Text('${liters.toStringAsFixed(1)} Litres consumés ce mois-ci'),
+                    trailing: Text('${cost.toStringAsFixed(2)} MAD', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  ),
+                );
+              }),
             ],
           );
         },

@@ -18,9 +18,11 @@ Stream<List<Vehicle>> vehicles(Ref ref) {
       .doc(user.uid)
       .collection('vehicles')
       .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => Vehicle.fromJson(doc.data(), doc.id))
-          .toList());
+      .map(
+        (snapshot) => snapshot.docs
+            .map((doc) => Vehicle.fromJson(doc.data(), doc.id))
+            .toList(),
+      );
 }
 
 @riverpod
@@ -34,14 +36,16 @@ Stream<List<FuelEntry>> fuelEntries(Ref ref) {
       .collection('fuel_entries')
       .orderBy('date', descending: true)
       .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => FuelEntry.fromJson(doc.data(), doc.id))
-          .toList());
+      .map(
+        (snapshot) => snapshot.docs
+            .map((doc) => FuelEntry.fromJson(doc.data(), doc.id))
+            .toList(),
+      );
 }
 
 @riverpod
 Stream<List<Maintenance>> maintenances(Ref ref) {
-  final user = ref.watch(authStateProvider).value;
+  final user = ref.watch(authStateProvider).value;  
   if (user == null) return Stream.value([]);
 
   return FirebaseFirestore.instance
@@ -50,9 +54,11 @@ Stream<List<Maintenance>> maintenances(Ref ref) {
       .collection('maintenances')
       .orderBy('date', descending: true)
       .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => Maintenance.fromJson(doc.data(), doc.id))
-          .toList());
+      .map(
+        (snapshot) => snapshot.docs
+            .map((doc) => Maintenance.fromJson(doc.data(), doc.id))
+            .toList(),
+      );
 }
 
 @Riverpod(keepAlive: true)
@@ -60,7 +66,11 @@ class TrackerController extends _$TrackerController {
   @override
   FutureOr<void> build() {}
 
-  Future<void> addVehicle(String brand, String model, String registration) async {
+  Future<void> addVehicle(
+    String brand,
+    String model,
+    String registration,
+  ) async {
     final user = ref.read(authStateProvider).value;
     if (user == null) return;
 
@@ -71,14 +81,18 @@ class TrackerController extends _$TrackerController {
           .doc(user.uid)
           .collection('vehicles')
           .add({
-        'brand': brand,
-        'model': model,
-        'registrationNumber': registration,
-      });
+            'brand': brand,
+            'model': model,
+            'registrationNumber': registration,
+          });
     });
   }
 
-  Future<void> addFuelEntry(String vehicleId, double liters, double cost) async {
+  Future<void> addFuelEntry(
+    String vehicleId,
+    double liters,
+    double cost,
+  ) async {
     final user = ref.read(authStateProvider).value;
     if (user == null) return;
 
@@ -89,15 +103,19 @@ class TrackerController extends _$TrackerController {
           .doc(user.uid)
           .collection('fuel_entries')
           .add({
-        'vehicleId': vehicleId,
-        'date': DateTime.now().toIso8601String(),
-        'liters': liters,
-        'cost': cost,
-      });
+            'vehicleId': vehicleId,
+            'date': DateTime.now().toIso8601String(),
+            'liters': liters,
+            'cost': cost,
+          });
     });
   }
 
-  Future<void> addMaintenance(String vehicleId, String description, double cost) async {
+  Future<void> addMaintenance(
+    String vehicleId,
+    String description,
+    double cost,
+  ) async {
     final user = ref.read(authStateProvider).value;
     if (user == null) return;
 
@@ -108,12 +126,12 @@ class TrackerController extends _$TrackerController {
           .doc(user.uid)
           .collection('maintenances')
           .add({
-        'vehicleId': vehicleId,
-        'categoryId': 'general',
-        'date': DateTime.now().toIso8601String(),
-        'description': description,
-        'cost': cost,
-      });
+            'vehicleId': vehicleId,
+            'categoryId': 'general',
+            'date': DateTime.now().toIso8601String(),
+            'description': description,
+            'cost': cost,
+          });
     });
   }
 }
