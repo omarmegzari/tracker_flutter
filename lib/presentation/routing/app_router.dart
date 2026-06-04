@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../screens/login_screen.dart';
 import '../screens/main_layout.dart';
 import '../screens/vehicles_screen.dart';
+import '../screens/fuel_screen.dart';
+import '../screens/maintenance_screen.dart';
 import '../../application/providers/auth_provider.dart';
 
 part 'app_router.g.dart';
@@ -41,11 +43,11 @@ GoRouter appRouter(Ref ref) {
           ),
           GoRoute(
             path: '/fuel',
-            builder: (context, state) => const Center(child: Text('Carburant Placeholder')),
+            builder: (context, state) => const FuelScreen(),
           ),
           GoRoute(
             path: '/maintenance',
-            builder: (context, state) => const Center(child: Text('Maintenance Placeholder')),
+            builder: (context, state) => const MaintenanceScreen(),
           ),
         ],
       ),
